@@ -55,6 +55,8 @@ namespace API_ToBeHero
 
             app.UseRouting();
 
+            app.UseCors(e => e.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

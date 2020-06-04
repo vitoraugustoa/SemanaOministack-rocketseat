@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API_ToBeHero.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_ToBeHero.Controllers
 {
@@ -24,7 +25,7 @@ namespace API_ToBeHero.Controllers
         {
             try
             {
-                var ong = _context.Ong.Where(i => i.Id == idOng).FirstOrDefault();
+                var ong = await _context.Ong.Where(i => i.Id == idOng).FirstOrDefaultAsync();
                 if(ong == null)    
                     return BadRequest("No ONG found with this ID.");
 

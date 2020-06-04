@@ -82,7 +82,7 @@ namespace API_ToBeHero.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace API_ToBeHero.Controllers
                 if (incident == null)
                     return NotFound("Incident not found.");
 
-                if (incident.Id != _helper.isAuthenticated())
+                if (incident.IdOng != _helper.isAuthenticated())
                     return Unauthorized("Operation not permitte.");
 
                 _context.Incident.Remove(incident);
