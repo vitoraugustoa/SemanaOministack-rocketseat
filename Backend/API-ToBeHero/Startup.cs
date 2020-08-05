@@ -51,8 +51,6 @@ namespace API_ToBeHero
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseCors(e => e.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

@@ -16,10 +16,12 @@ namespace API_ToBeHero.Controllers
     public class OngController : ControllerBase
     {
         private readonly HeroDbContext _context;
+        private readonly IHelpers _helper;
 
-        public OngController(HeroDbContext context)
+        public OngController(HeroDbContext context, IHelpers helper)
         {
             _context = context;
+            _helper = helper;
         }
 
         [HttpGet]
@@ -28,6 +30,23 @@ namespace API_ToBeHero.Controllers
             try
             {
                 return Ok(await _context.Ong.ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("Autenticado")]
+        public async Task<IActionResult> GetAutenticado()
+        {
+            try
+            {
+                int ongId = _helper.isAuthenticated();
+                if (ongId == 0)
+                    return Unauthorized();
+
+                return Ok(await _context.Ong.Where(e => e.Id == ongId).FirstOrDefaultAsync());
             }
             catch (Exception ex)
             {

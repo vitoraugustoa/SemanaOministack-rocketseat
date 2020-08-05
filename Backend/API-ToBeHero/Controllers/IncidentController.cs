@@ -36,7 +36,20 @@ namespace API_ToBeHero.Controllers
 
                 int count = await _context.Incident.Where(i => i.IdOng == ongId).CountAsync();
                 Response.Headers.Add("X-Total-Count", count.ToString());
-                return Ok(await _context.Ong.Include(i => i.Incidents).Where(i => i.Id == ongId).Skip((page - 1) * 5).Take(5).ToListAsync());
+                return Ok(await _context.Ong.Include(i => i.Incidents).Where(i => i.Id == ongId).Select(e => e.Incidents.Skip((page - 1) * 3).Take(3)).FirstOrDefaultAsync());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("Teste")]
+        public async Task<IActionResult> Teste()
+        {
+            try
+            {
+                return Ok(await  _context.Ong.Include(i => i.Incidents).ToListAsync());
             }
             catch (Exception ex)
             {
